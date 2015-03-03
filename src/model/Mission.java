@@ -3,8 +3,18 @@ package model;
 
 import java.util.ArrayList;
 
+/**
+ * class to manage the mission of the applet
+ */
 public class Mission implements MissionBehaviour {
+    /**
+     * the description of the mission : presentation
+     */
     private String missionDescription;
+
+    /**
+     * an array that contains the parts of the mission
+     */
     private ArrayList<String> parts;
 
     public Mission(){

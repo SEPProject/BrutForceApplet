@@ -3,52 +3,12 @@ JFDML JFormDesigner: "5.2.1.0.138" Java: "1.6.0_65" encoding: "UTF-8"
 new FormModel {
 	contentType: "form/swing"
 	root: new FormRoot {
-		add( new FormWindow( "java.awt.Dialog", new FormLayoutManager( class java.awt.BorderLayout ) ) {
-			name: "missionDialog"
-			"background": new java.awt.Color( 238, 238, 238, 255 )
-			"$sizePolicy": 1
-			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-				"$horizontalGroup": "par l {seq l {space :::p, par l {comp missionAssessment:::::x, comp missionDescriptionLabel:::::x}, space :::p}, seq l {space :p:182:p, comp missionLabel:::p::p, space :::x}}"
-				"$verticalGroup": "par l {seq l {space ::17:x, comp missionLabel:::p:32:p, space s:::p, comp missionDescriptionLabel:::p::p, space :::p, comp missionAssessment:::p::p, space :::p}}"
-			} ) {
-				name: "missionPanel"
-				add( new FormComponent( "javax.swing.JLabel" ) {
-					name: "missionLabel"
-					"text": "Mission : "
-				} )
-				add( new FormComponent( "javax.swing.JTextArea" ) {
-					name: "missionAssessment"
-					"background": &Color0 new java.awt.Color( 238, 238, 238, 255 )
-					"text": "1) As you can see the passwordFile is unreadable. That's because the computer stores encrypted password. Hopefully you know the encryption algorithm, then you just need to try words, encrypt them then compare them to the stored encrypted password. Hopefully the encryption is made by the applet. The next step is to build a dictionnary. It's a file where every suggestion of password are stored and will be \"parcourue\" to be tried. Now add words that you think can be the password. "
-					"lineWrap": true
-					"wrapStyleWord": true
-					"cursor": &Cursor0 new java.awt.Cursor( 0 )
-					"focusable": false
-					"caretColor": &Color1 new java.awt.Color( 238, 238, 238, 255 )
-				} )
-				add( new FormComponent( "javax.swing.JTextArea" ) {
-					name: "missionDescriptionLabel"
-					"background": #Color0
-					"text": "We lost the password of our computer, but we have the file where it's stored in the computer that you can see clicking on the : passwordfile button. To retrieve it we propose to you to use a Brute force attack. "
-					"lineWrap": true
-					"wrapStyleWord": true
-					"cursor": #Cursor0
-					"focusable": false
-					"caretColor": #Color1
-				} )
-			}, new FormLayoutConstraints( class java.lang.String ) {
-				"value": "Center"
-			} )
-		}, new FormLayoutConstraints( null ) {
-			"location": new java.awt.Point( 0, 455 )
-			"size": new java.awt.Dimension( 430, 295 )
-		} )
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class java.awt.BorderLayout ) ) {
 			name: "mainPage"
 			"$sizePolicy": 1
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-				"$horizontalGroup": "par l {seq l {space :p:160:p, comp attackLabel:::p:94:p, space ::305:x, comp infoLabel:::p:124:p, space :p:135:p}, seq t {space :::p, par t {seq {comp textField1:::p:105:p, space :::p, comp button1:::p::p, space ::412:x, comp missionButton:::p:85:p}, seq {comp scrollAttackpane:::p:385:p, space ::18:x, comp scrollInfoPane:::p:385:p}}, space :p:24:p}, seq t {space ::692:x, comp button2:::p::p, space :p:14:p}}"
-				"$verticalGroup": "par l {seq {par b {comp attackLabel::b:p::p, comp infoLabel::b:p::p}, space :p:2:p, par t {comp scrollInfoPane:::p:324:p, comp scrollAttackpane:::p:324:p}, par l {seq {par b {comp textField1::b:p::p, comp button1::b:p::p}, space :::x}, seq l {space :::x, comp missionButton:::p::p, space :::p, comp button2:::p::p, space :p:63:p}}}}"
+				"$horizontalGroup": "par l {seq l {space :p:160:p, comp attackLabel:::p:94:p, space ::305:x, comp infoLabel:::p:124:p, space :p:135:p}, seq t {space :::p, par t {seq {comp wordTextArea:::p:105:p, space :::p, comp addWordButton:::p::p, space ::412:x, comp missionButton:::p:85:p}, seq {comp scrollAttackpane:::p:385:p, space ::18:x, comp scrollInfoPane:::p:385:p}}, space :p:24:p}, seq t {space ::692:x, comp passwordButton:::p::p, space :p:14:p}}"
+				"$verticalGroup": "par l {seq {par b {comp attackLabel::b:p::p, comp infoLabel::b:p::p}, space :p:2:p, par t {comp scrollInfoPane:::p:324:p, comp scrollAttackpane:::p:324:p}, par l {seq {par b {comp wordTextArea::b:p::p, comp addWordButton::b:p::p}, space :::x}, seq l {space :::x, comp missionButton:::p::p, space :::p, comp passwordButton:::p::p, space :p:63:p}}}}"
 			} ) {
 				name: "userPane"
 				add( new FormComponent( "javax.swing.JToggleButton" ) {
@@ -57,15 +17,17 @@ new FormModel {
 					addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "missionButtonMouseClicked", true ) )
 				} )
 				add( new FormComponent( "javax.swing.JTextField" ) {
-					name: "textField1"
+					name: "wordTextArea"
 				} )
 				add( new FormComponent( "javax.swing.JButton" ) {
-					name: "button1"
+					name: "addWordButton"
 					"text": "add word to dictionnary"
+					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "addWordButtonActionPerformed", true ) )
 				} )
 				add( new FormComponent( "javax.swing.JButton" ) {
-					name: "button2"
+					name: "passwordButton"
 					"text": "passwordFile"
+					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "passwordButtonActionPerformed", true ) )
 				} )
 				add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
 					name: "scrollAttackpane"
@@ -91,26 +53,25 @@ new FormModel {
 				"value": "Center"
 			} )
 		}, new FormLayoutConstraints( null ) {
-			"location": new java.awt.Point( 455, 240 )
+			"location": new java.awt.Point( 0, 595 )
 			"size": new java.awt.Dimension( 820, 505 )
 		} )
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class java.awt.BorderLayout ) ) {
 			name: "firstPage"
 			"$sizePolicy": 1
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-				"$horizontalGroup": "par l {seq l {space :p:46:p, par l {seq {space :6:6:p, comp descriptionLabel:::p:245:p}, comp welcomeLabel:::p:261:p, seq l {space :p:8:p, comp beginButton:::p:237:p}}, space ::51:x}}"
-				"$verticalGroup": "par l {seq {space :::p, comp welcomeLabel:::p:52:p, space :::p, comp descriptionLabel:::p::p, space :p:12:p, comp beginButton:::p::p, space ::13:x}}"
+				"$horizontalGroup": "par l {seq l {space :p:46:p, par l {seq {space :6:6:p, comp appletDescriptionText:::p:245:p}, comp welcomeLabel:::p:261:p, seq l {space :p:8:p, comp beginButton:::p:237:p}}, space ::51:x}}"
+				"$verticalGroup": "par l {seq {space :::p, comp welcomeLabel:::p:52:p, space :::p, comp appletDescriptionText:::p::p, space :p:12:p, comp beginButton:::p::p, space ::77:x}}"
 			} ) {
 				name: "firstPagePane"
 				add( new FormComponent( "javax.swing.JTextArea" ) {
-					name: "descriptionLabel"
-					"background": #Color0
-					"text": "Through this applet, you will discover how \"Brute force\" attacks are performed by Hackers. You will also see how you can have a good password."
+					name: "appletDescriptionText"
+					"background": &Color0 new java.awt.Color( 238, 238, 238, 255 )
 					"lineWrap": true
 					"wrapStyleWord": true
-					"cursor": #Cursor0
+					"cursor": &Cursor0 new java.awt.Cursor( 0 )
 					"focusable": false
-					"caretColor": #Color1
+					"caretColor": &Color1 new java.awt.Color( 238, 238, 238, 255 )
 				} )
 				add( new FormComponent( "javax.swing.JLabel" ) {
 					name: "welcomeLabel"
@@ -126,8 +87,46 @@ new FormModel {
 				"value": "Center"
 			} )
 		}, new FormLayoutConstraints( null ) {
-			"location": new java.awt.Point( 145, 0 )
+			"location": new java.awt.Point( 10, 0 )
 			"size": new java.awt.Dimension( 360, 225 )
+		} )
+		add( new FormWindow( "javax.swing.JDialog", new FormLayoutManager( class java.awt.BorderLayout ) ) {
+			name: "missionDialog"
+			"resizable": false
+			"$sizePolicy": 1
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+				"$horizontalGroup": "par l {seq l {space :p:98:p, par t {comp missionDescriptionText:::p:333:p, seq {comp missionLabel:::p::p, space :p:150:p}}, space ::72:x}, seq t {space ::90:x, comp missionPart1:::p:350:p, space :p:63:p}}"
+				"$verticalGroup": "par l {seq l {space :p:22:p, comp missionLabel:::p:32:p, space :::p, comp missionDescriptionText:::p::p, space :::p, comp missionPart1:::p::p, space ::243:x}}"
+			} ) {
+				name: "missionDialogPanel"
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "missionLabel"
+					"text": "Mission : "
+				} )
+				add( new FormComponent( "javax.swing.JTextArea" ) {
+					name: "missionDescriptionText"
+					"background": #Color0
+					"lineWrap": true
+					"wrapStyleWord": true
+					"cursor": #Cursor0
+					"focusable": false
+					"caretColor": #Color1
+				} )
+				add( new FormComponent( "javax.swing.JTextArea" ) {
+					name: "missionPart1"
+					"background": #Color0
+					"lineWrap": true
+					"wrapStyleWord": true
+					"cursor": #Cursor0
+					"focusable": false
+					"caretColor": #Color1
+				} )
+			}, new FormLayoutConstraints( class java.lang.String ) {
+				"value": "Center"
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 490, 135 )
+			"size": new java.awt.Dimension( 505, 365 )
 		} )
 	}
 }

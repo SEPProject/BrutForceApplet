@@ -10,19 +10,45 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.GroupLayout;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Style;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 
-/**
- * @author unknown
- */
 public class View implements ViewBehaviour {
 
-    Controller controller;
+    private Controller controller;
+
+    private StyledDocument info;
+    private StyledDocument hackerView;
+    private Style  errorStyle, infoStyle;
 
     public View() {
+        /* init */
         System.out.println("*** View init ***");
         initComponents();
-        System.out.println("*** setting main not visible ***");
+
+        /*
+        * styles' initialization
+        * Red for error printed for user
+        */
+        info = infoPane.getStyledDocument();
+
+        errorStyle = infoPane.addStyle("errStyle", null);
+        infoStyle = infoPane.addStyle("infoStyle", null);
+
+        StyleConstants.setForeground(infoStyle, Color.BLACK);
+        StyleConstants.setForeground(errorStyle, Color.RED);
+
+
+        hackerView = attackPane.getStyledDocument();
+
+
+
+        /* managing first pane */
+        mainPage.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         mainPage.setVisible(false);
+        firstPage.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         missionDialog.setVisible(false);
     }
 
@@ -41,6 +67,29 @@ public class View implements ViewBehaviour {
         return controller;
     }
 
+    /*
+        FUNCTION CALLED FROM CONTROLLER : SETTING THE VIEW
+     */
+
+    @Override
+    public void setAppletDescriptionText(String s){
+        appletDescriptionText.setText(s);
+    }
+
+    @Override
+    public void setMissionDescriptionText(String s){
+        missionDescriptionText.setText(s);
+    }
+
+    @Override
+    public void setMissionPart1 (String s){
+        missionPart1.setText(s);
+    }
+
+
+    /*
+        FUNCTION CALLED FROM USER
+    */
 
     private void beginButtonActionPerformed(ActionEvent e) {
         // TODO add your code here
@@ -55,20 +104,34 @@ public class View implements ViewBehaviour {
         missionDialog.setVisible(true);
     }
 
+    private void passwordButtonActionPerformed(ActionEvent e) {
+        // TODO add your code here
+        System.out.println("*** passwordButton pressed ***");
+        try{
+            info.insertString(info.getLength(),"see password file",infoStyle);
+        } catch(BadLocationException error) {
+            System.err.println(error);
+        }
+    }
+
+    private void addWordButtonActionPerformed(ActionEvent e) {
+        // TODO add your code here
+        System.out.println("*** passwordButton pressed ***");
+        //infoPane.add
+    }
+
+
+
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - fgd efeg
-        missionDialog = new Dialog();
-        missionPanel = new JPanel();
-        missionLabel = new JLabel();
-        missionAssessment = new JTextArea();
-        missionDescriptionLabel = new JTextArea();
         mainPage = new JFrame();
         userPane = new JPanel();
         missionButton = new JToggleButton();
-        textField1 = new JTextField();
-        button1 = new JButton();
-        button2 = new JButton();
+        wordTextArea = new JTextField();
+        addWordButton = new JButton();
+        passwordButton = new JButton();
         scrollAttackpane = new JScrollPane();
         attackPane = new JTextPane();
         scrollInfoPane = new JScrollPane();
@@ -77,78 +140,14 @@ public class View implements ViewBehaviour {
         infoLabel = new JLabel();
         firstPage = new JFrame();
         firstPagePane = new JPanel();
-        descriptionLabel = new JTextArea();
+        appletDescriptionText = new JTextArea();
         welcomeLabel = new JLabel();
         beginButton = new JButton();
-
-        //======== missionDialog ========
-        {
-            missionDialog.setBackground(new Color(238, 238, 238));
-            missionDialog.setLayout(new BorderLayout());
-
-            //======== missionPanel ========
-            {
-
-                // JFormDesigner evaluation mark
-                missionPanel.setBorder(new javax.swing.border.CompoundBorder(
-                    new javax.swing.border.TitledBorder(new javax.swing.border.EmptyBorder(0, 0, 0, 0),
-                        "JFormDesigner Evaluation", javax.swing.border.TitledBorder.CENTER,
-                        javax.swing.border.TitledBorder.BOTTOM, new java.awt.Font("Dialog", java.awt.Font.BOLD, 12),
-                        java.awt.Color.red), missionPanel.getBorder())); missionPanel.addPropertyChangeListener(new java.beans.PropertyChangeListener(){public void propertyChange(java.beans.PropertyChangeEvent e){if("border".equals(e.getPropertyName()))throw new RuntimeException();}});
-
-
-                //---- missionLabel ----
-                missionLabel.setText("Mission : ");
-
-                //---- missionAssessment ----
-                missionAssessment.setBackground(new Color(238, 238, 238));
-                missionAssessment.setText("1) As you can see the passwordFile is unreadable. That's because the computer stores encrypted password. Hopefully you know the encryption algorithm, then you just need to try words, encrypt them then compare them to the stored encrypted password. Hopefully the encryption is made by the applet. The next step is to build a dictionnary. It's a file where every suggestion of password are stored and will be \"parcourue\" to be tried. Now add words that you think can be the password. ");
-                missionAssessment.setLineWrap(true);
-                missionAssessment.setWrapStyleWord(true);
-                missionAssessment.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-                missionAssessment.setFocusable(false);
-                missionAssessment.setCaretColor(new Color(238, 238, 238));
-
-                //---- missionDescriptionLabel ----
-                missionDescriptionLabel.setBackground(new Color(238, 238, 238));
-                missionDescriptionLabel.setText("We lost the password of our computer, but we have the file where it's stored in the computer that you can see clicking on the : passwordfile button. To retrieve it we propose to you to use a Brute force attack. ");
-                missionDescriptionLabel.setLineWrap(true);
-                missionDescriptionLabel.setWrapStyleWord(true);
-                missionDescriptionLabel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-                missionDescriptionLabel.setFocusable(false);
-                missionDescriptionLabel.setCaretColor(new Color(238, 238, 238));
-
-                GroupLayout missionPanelLayout = new GroupLayout(missionPanel);
-                missionPanel.setLayout(missionPanelLayout);
-                missionPanelLayout.setHorizontalGroup(
-                    missionPanelLayout.createParallelGroup()
-                        .addGroup(missionPanelLayout.createSequentialGroup()
-                            .addContainerGap()
-                            .addGroup(missionPanelLayout.createParallelGroup()
-                                .addComponent(missionAssessment)
-                                .addComponent(missionDescriptionLabel))
-                            .addContainerGap())
-                        .addGroup(missionPanelLayout.createSequentialGroup()
-                            .addGap(182, 182, 182)
-                            .addComponent(missionLabel)
-                            .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                );
-                missionPanelLayout.setVerticalGroup(
-                    missionPanelLayout.createParallelGroup()
-                        .addGroup(missionPanelLayout.createSequentialGroup()
-                            .addContainerGap(17, Short.MAX_VALUE)
-                            .addComponent(missionLabel, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(missionDescriptionLabel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(missionAssessment, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                            .addContainerGap())
-                );
-            }
-            missionDialog.add(missionPanel, BorderLayout.CENTER);
-            missionDialog.setSize(430, 295);
-            missionDialog.setLocationRelativeTo(missionDialog.getOwner());
-        }
+        missionDialog = new JDialog();
+        missionDialogPanel = new JPanel();
+        missionLabel = new JLabel();
+        missionDescriptionText = new JTextArea();
+        missionPart1 = new JTextArea();
 
         //======== mainPage ========
         {
@@ -175,11 +174,23 @@ public class View implements ViewBehaviour {
                     }
                 });
 
-                //---- button1 ----
-                button1.setText("add word to dictionnary");
+                //---- addWordButton ----
+                addWordButton.setText("add word to dictionnary");
+                addWordButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        addWordButtonActionPerformed(e);
+                    }
+                });
 
-                //---- button2 ----
-                button2.setText("passwordFile");
+                //---- passwordButton ----
+                passwordButton.setText("passwordFile");
+                passwordButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        passwordButtonActionPerformed(e);
+                    }
+                });
 
                 //======== scrollAttackpane ========
                 {
@@ -211,9 +222,9 @@ public class View implements ViewBehaviour {
                             .addContainerGap()
                             .addGroup(userPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                                 .addGroup(userPaneLayout.createSequentialGroup()
-                                    .addComponent(textField1, GroupLayout.PREFERRED_SIZE, 105, GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(wordTextArea, GroupLayout.PREFERRED_SIZE, 105, GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(button1)
+                                    .addComponent(addWordButton)
                                     .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 412, Short.MAX_VALUE)
                                     .addComponent(missionButton, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE))
                                 .addGroup(userPaneLayout.createSequentialGroup()
@@ -223,7 +234,7 @@ public class View implements ViewBehaviour {
                             .addGap(24, 24, 24))
                         .addGroup(GroupLayout.Alignment.TRAILING, userPaneLayout.createSequentialGroup()
                             .addContainerGap(692, Short.MAX_VALUE)
-                            .addComponent(button2)
+                            .addComponent(passwordButton)
                             .addGap(14, 14, 14))
                 );
                 userPaneLayout.setVerticalGroup(
@@ -239,14 +250,14 @@ public class View implements ViewBehaviour {
                             .addGroup(userPaneLayout.createParallelGroup()
                                 .addGroup(userPaneLayout.createSequentialGroup()
                                     .addGroup(userPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                        .addComponent(textField1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(button1))
+                                        .addComponent(wordTextArea, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(addWordButton))
                                     .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGroup(userPaneLayout.createSequentialGroup()
                                     .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(missionButton)
                                     .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(button2)
+                                    .addComponent(passwordButton)
                                     .addGap(63, 63, 63))))
                 );
             }
@@ -271,14 +282,13 @@ public class View implements ViewBehaviour {
                         java.awt.Color.red), firstPagePane.getBorder())); firstPagePane.addPropertyChangeListener(new java.beans.PropertyChangeListener(){public void propertyChange(java.beans.PropertyChangeEvent e){if("border".equals(e.getPropertyName()))throw new RuntimeException();}});
 
 
-                //---- descriptionLabel ----
-                descriptionLabel.setBackground(new Color(238, 238, 238));
-                descriptionLabel.setText("Through this applet, you will discover how \"Brute force\" attacks are performed by Hackers. You will also see how you can have a good password.");
-                descriptionLabel.setLineWrap(true);
-                descriptionLabel.setWrapStyleWord(true);
-                descriptionLabel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-                descriptionLabel.setFocusable(false);
-                descriptionLabel.setCaretColor(new Color(238, 238, 238));
+                //---- appletDescriptionText ----
+                appletDescriptionText.setBackground(new Color(238, 238, 238));
+                appletDescriptionText.setLineWrap(true);
+                appletDescriptionText.setWrapStyleWord(true);
+                appletDescriptionText.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+                appletDescriptionText.setFocusable(false);
+                appletDescriptionText.setCaretColor(new Color(238, 238, 238));
 
                 //---- welcomeLabel ----
                 welcomeLabel.setText("WELCOME TO THE BRUTE FORCE APPLET");
@@ -302,7 +312,7 @@ public class View implements ViewBehaviour {
                             .addGroup(firstPagePaneLayout.createParallelGroup()
                                 .addGroup(firstPagePaneLayout.createSequentialGroup()
                                     .addGap(6, 6, 6)
-                                    .addComponent(descriptionLabel, GroupLayout.PREFERRED_SIZE, 245, GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(appletDescriptionText, GroupLayout.PREFERRED_SIZE, 245, GroupLayout.PREFERRED_SIZE))
                                 .addComponent(welcomeLabel, GroupLayout.PREFERRED_SIZE, 261, GroupLayout.PREFERRED_SIZE)
                                 .addGroup(firstPagePaneLayout.createSequentialGroup()
                                     .addGap(8, 8, 8)
@@ -315,32 +325,99 @@ public class View implements ViewBehaviour {
                             .addContainerGap()
                             .addComponent(welcomeLabel, GroupLayout.PREFERRED_SIZE, 52, GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(descriptionLabel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(appletDescriptionText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                             .addGap(12, 12, 12)
                             .addComponent(beginButton)
-                            .addContainerGap(13, Short.MAX_VALUE))
+                            .addContainerGap(77, Short.MAX_VALUE))
                 );
             }
             firstPageContentPane.add(firstPagePane, BorderLayout.CENTER);
             firstPage.setSize(360, 225);
             firstPage.setLocationRelativeTo(firstPage.getOwner());
         }
+
+        //======== missionDialog ========
+        {
+            missionDialog.setResizable(false);
+            Container missionDialogContentPane = missionDialog.getContentPane();
+            missionDialogContentPane.setLayout(new BorderLayout());
+
+            //======== missionDialogPanel ========
+            {
+
+                // JFormDesigner evaluation mark
+                missionDialogPanel.setBorder(new javax.swing.border.CompoundBorder(
+                    new javax.swing.border.TitledBorder(new javax.swing.border.EmptyBorder(0, 0, 0, 0),
+                        "JFormDesigner Evaluation", javax.swing.border.TitledBorder.CENTER,
+                        javax.swing.border.TitledBorder.BOTTOM, new java.awt.Font("Dialog", java.awt.Font.BOLD, 12),
+                        java.awt.Color.red), missionDialogPanel.getBorder())); missionDialogPanel.addPropertyChangeListener(new java.beans.PropertyChangeListener(){public void propertyChange(java.beans.PropertyChangeEvent e){if("border".equals(e.getPropertyName()))throw new RuntimeException();}});
+
+
+                //---- missionLabel ----
+                missionLabel.setText("Mission : ");
+
+                //---- missionDescriptionText ----
+                missionDescriptionText.setBackground(new Color(238, 238, 238));
+                missionDescriptionText.setLineWrap(true);
+                missionDescriptionText.setWrapStyleWord(true);
+                missionDescriptionText.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+                missionDescriptionText.setFocusable(false);
+                missionDescriptionText.setCaretColor(new Color(238, 238, 238));
+
+                //---- missionPart1 ----
+                missionPart1.setBackground(new Color(238, 238, 238));
+                missionPart1.setLineWrap(true);
+                missionPart1.setWrapStyleWord(true);
+                missionPart1.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+                missionPart1.setFocusable(false);
+                missionPart1.setCaretColor(new Color(238, 238, 238));
+
+                GroupLayout missionDialogPanelLayout = new GroupLayout(missionDialogPanel);
+                missionDialogPanel.setLayout(missionDialogPanelLayout);
+                missionDialogPanelLayout.setHorizontalGroup(
+                    missionDialogPanelLayout.createParallelGroup()
+                        .addGroup(missionDialogPanelLayout.createSequentialGroup()
+                            .addGap(98, 98, 98)
+                            .addGroup(missionDialogPanelLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                                .addComponent(missionDescriptionText, GroupLayout.PREFERRED_SIZE, 333, GroupLayout.PREFERRED_SIZE)
+                                .addGroup(missionDialogPanelLayout.createSequentialGroup()
+                                    .addComponent(missionLabel)
+                                    .addGap(150, 150, 150)))
+                            .addContainerGap(72, Short.MAX_VALUE))
+                        .addGroup(GroupLayout.Alignment.TRAILING, missionDialogPanelLayout.createSequentialGroup()
+                            .addContainerGap(90, Short.MAX_VALUE)
+                            .addComponent(missionPart1, GroupLayout.PREFERRED_SIZE, 350, GroupLayout.PREFERRED_SIZE)
+                            .addGap(63, 63, 63))
+                );
+                missionDialogPanelLayout.setVerticalGroup(
+                    missionDialogPanelLayout.createParallelGroup()
+                        .addGroup(missionDialogPanelLayout.createSequentialGroup()
+                            .addGap(22, 22, 22)
+                            .addComponent(missionLabel, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(missionDescriptionText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(missionPart1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                            .addContainerGap(243, Short.MAX_VALUE))
+                );
+            }
+            missionDialogContentPane.add(missionDialogPanel, BorderLayout.CENTER);
+            missionDialog.setSize(505, 365);
+            missionDialog.setLocationRelativeTo(missionDialog.getOwner());
+        }
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
+
+
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     // Generated using JFormDesigner Evaluation license - fgd efeg
-    private Dialog missionDialog;
-    private JPanel missionPanel;
-    private JLabel missionLabel;
-    private JTextArea missionAssessment;
-    private JTextArea missionDescriptionLabel;
     private JFrame mainPage;
     private JPanel userPane;
     private JToggleButton missionButton;
-    private JTextField textField1;
-    private JButton button1;
-    private JButton button2;
+    private JTextField wordTextArea;
+    private JButton addWordButton;
+    private JButton passwordButton;
     private JScrollPane scrollAttackpane;
     private JTextPane attackPane;
     private JScrollPane scrollInfoPane;
@@ -349,8 +426,13 @@ public class View implements ViewBehaviour {
     private JLabel infoLabel;
     private JFrame firstPage;
     private JPanel firstPagePane;
-    private JTextArea descriptionLabel;
+    private JTextArea appletDescriptionText;
     private JLabel welcomeLabel;
     private JButton beginButton;
+    private JDialog missionDialog;
+    private JPanel missionDialogPanel;
+    private JLabel missionLabel;
+    private JTextArea missionDescriptionText;
+    private JTextArea missionPart1;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }

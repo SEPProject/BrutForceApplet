@@ -4,9 +4,15 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+/**
+ * controls passwords , can hash passwords
+ */
 public class PasswordManager implements PasswordManagerBehaviour {
 
-    String hashStored;
+    /**
+     * the hash of the password
+     */
+    private String hashStored;
 
     @Override
     public String getHashStored(){
@@ -19,6 +25,11 @@ public class PasswordManager implements PasswordManagerBehaviour {
     }
 
 
+    /**
+     * hash the password in parameter with a MD5 hash algorithm without salt
+     * @param password
+     * @return
+     */
     public String hash(String password){
         String md5 = null;
         if (password ==null){

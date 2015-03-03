@@ -16,6 +16,8 @@ public class Main {
         Model model = new Model();
         View view = new View();
         Controller ctrl = new Controller(model,view);
+        ctrl.setAppletDescription();
+        ctrl.setMissionApplet();
         ctrl.getView().getFirstPage().setVisible(true);
 
         /*Scanner sc = new Scanner(System.in);

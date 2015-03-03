@@ -38,6 +38,48 @@ public class Controller implements Controller2Model, Controller2View {
         return view;
     }
 
+
+    /**
+     * set the description of the applet
+     */
+    public void setAppletDescription(){
+        model.setDescription("Through this applet, you will discover" +
+                " how \"Brute force\" attacks are performed by Hackers. You" +
+                " will also see how you can have a good password.");
+        view.setAppletDescriptionText(getModel().getDescription());
+    }
+
+
+    /**
+     * set the mission description + parts
+     */
+    public void setMissionApplet(){
+
+        model.getMission().setDescription("We lost the password of our computer, but we" +
+                " have the file where it's stored in the computer that you can see" +
+                " clicking on the : passwordfile button. To retrieve it we propose to you" +
+                " to use a Brute force attack. ");
+
+        view.setMissionDescriptionText(getModel().getMission().getDescription());
+
+        model.getMission().setPart(0, "1) As you can see the passwordFile is unreadable." +
+                " That's because the computer stores encrypted password. Hopefully" +
+                " you know the encryption algorithm, then you just need to try words," +
+                " encrypt them then compare them to the stored encrypted password. Hopefully" +
+                " the encryption is made by the applet. The next step is to build a dictionnary." +
+                " It's a file where every suggestion of password are stored and will be browsed " +
+                "to be tried. Now add words that you think can be the password. ");
+
+        view.setMissionPart1(getModel().getMission().getPart(0));
+
+    }
+
+
+
+
+
+
+
     public boolean bruteforceAttempt() {
 
         String password = "" ;

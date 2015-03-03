@@ -4,22 +4,47 @@ import controller.*;
 import java.io.File;
 import java.util.ArrayList;
 
-
+/**
+ * model : manage the stored data of the application
+ */
 public class Model implements ModelBehaviour {
 
     public Controller controller;
+
+    /**
+     * a list of the worst password
+     */
     public File worstList;
+
+    /**
+     * the password manager
+     */
     private PasswordManager passManager;
-    private ArrayList<Mission> appletMissions ;
+
+    /**
+     * the description of the applet : summary
+     */
+    private String description;
+
+    /**
+     * mission of the applet
+     */
+    private Mission appletMission ;
 
     public Model(){
         init();
     }
 
+    /**
+     * initialize the model :
+     * set the worst password file
+     * set the password manager
+     * set the mission
+     */
     public void init(){
             worstList = new File("./data/worstList.txt");
             passManager = new PasswordManager();
-            appletMissions = new ArrayList<Mission>();
+            appletMission = new Mission();
     }
 
     public File getWorstList() {
@@ -29,11 +54,6 @@ public class Model implements ModelBehaviour {
     @Override
     public void setController(Controller c){
         this.controller = c;
-    }
-
-    @Override
-    public Controller getController(){
-        return this.controller;
     }
 
     @Override
@@ -47,8 +67,18 @@ public class Model implements ModelBehaviour {
     }
 
     @Override
-    public ArrayList<Mission> getMission(){
-        return appletMissions;
+    public Mission getMission(){
+        return appletMission;
+    }
+
+    @Override
+    public String getDescription(){
+        return description;
+    }
+
+    @Override
+    public void setDescription(String s){
+        description = s;
     }
 
 
