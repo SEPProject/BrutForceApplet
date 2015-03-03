@@ -14,4 +14,10 @@ public interface PasswordManagerBehaviour {
      */
     public void setHashStored(String password);
 
+    /**
+     * test if the provided hash of the user is wrong or not
+     * @param hashProvided
+     * @return boolean
+     */
+    public boolean testHashUser(String hashProvided);
 }

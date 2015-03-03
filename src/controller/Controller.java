@@ -16,6 +16,8 @@ public class Controller implements Controller2Model, Controller2View {
     public Controller(Model m ,View v){
         this.model = m;
         this.view = v;
+        model.setController(this);
+        view.setController(this);
     }
 
     @Override

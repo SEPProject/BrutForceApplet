@@ -1,7 +1,11 @@
 package model;
 
 import controller.*;
+
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -15,6 +19,11 @@ public class Model implements ModelBehaviour {
      * a list of the worst password
      */
     public File worstList;
+
+    /**
+     * the file where the password to find is stored
+     */
+    private File passwordFile;
 
     /**
      * the password manager
@@ -45,6 +54,7 @@ public class Model implements ModelBehaviour {
             worstList = new File("./data/worstList.txt");
             passManager = new PasswordManager();
             appletMission = new Mission();
+
     }
 
     public File getWorstList() {

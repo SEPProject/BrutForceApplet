@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="BrutForceApplet:jar">
+    <output-path>$USER_HOME$/Desktop/test/applet</output-path>
+    <root id="archive" name="BrutForceApplet.jar">
+      <element id="module-output" name="BrutForceApplet" />
+    </root>
+  </artifact>
+</component>

@@ -7,22 +7,14 @@ new FormModel {
 			name: "mainPage"
 			"$sizePolicy": 1
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-				"$horizontalGroup": "par l {seq l {space :p:160:p, comp attackLabel:::p:94:p, space ::305:x, comp infoLabel:::p:124:p, space :p:135:p}, seq t {space :::p, par t {seq {comp wordTextArea:::p:105:p, space :::p, comp addWordButton:::p::p, space ::412:x, comp missionButton:::p:85:p}, seq {comp scrollAttackpane:::p:385:p, space ::18:x, comp scrollInfoPane:::p:385:p}}, space :p:24:p}, seq t {space ::692:x, comp passwordButton:::p::p, space :p:14:p}}"
-				"$verticalGroup": "par l {seq {par b {comp attackLabel::b:p::p, comp infoLabel::b:p::p}, space :p:2:p, par t {comp scrollInfoPane:::p:324:p, comp scrollAttackpane:::p:324:p}, par l {seq {par b {comp wordTextArea::b:p::p, comp addWordButton::b:p::p}, space :::x}, seq l {space :::x, comp missionButton:::p::p, space :::p, comp passwordButton:::p::p, space :p:63:p}}}}"
+				"$horizontalGroup": "par l {seq l {space :p:160:p, comp attackLabel:::p:94:p, space :::x, comp infoLabel:::p:124:p, space :p:135:p}, seq l {space :::p, par l {seq {comp scrollAttackpane:::p:385:p, space ::36:x, comp scrollInfoPane:::p:385:p}, seq {comp panel1:::p::p, space ::208:x, par l {comp passwordButton::t:p::p, comp missionButton::t:p:85:p}}}, space :::p}}"
+				"$verticalGroup": "par l {seq {par b {comp attackLabel::b:p::p, comp infoLabel::b:p::p}, space :p:2:p, par t {comp scrollAttackpane:::p:324:p, comp scrollInfoPane:::p:324:p}, par l {seq {space :::x, comp missionButton:::p::p, space :::p, comp passwordButton:::p::p, space :p:66:p}, seq {space s:::p, comp panel1:::p:70:p, space :p:51:p}}}}"
 			} ) {
 				name: "userPane"
 				add( new FormComponent( "javax.swing.JToggleButton" ) {
 					name: "missionButton"
 					"text": "Mission"
 					addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "missionButtonMouseClicked", true ) )
-				} )
-				add( new FormComponent( "javax.swing.JTextField" ) {
-					name: "wordTextArea"
-				} )
-				add( new FormComponent( "javax.swing.JButton" ) {
-					name: "addWordButton"
-					"text": "add word to dictionnary"
-					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "addWordButtonActionPerformed", true ) )
 				} )
 				add( new FormComponent( "javax.swing.JButton" ) {
 					name: "passwordButton"
@@ -49,11 +41,46 @@ new FormModel {
 					name: "infoLabel"
 					"text": "More information"
 				} )
+				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.CardLayout ) ) {
+					name: "panel1"
+					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+						"$horizontalGroup": "par l {seq t {space :::p, comp providedHashArea:::p:305:p, space ::29:x, comp enterHashButton:::p:121:p, space :p:25:p}}"
+						"$verticalGroup": "par l {seq t {space ::21:x, par b {comp enterHashButton::b:p::p, comp providedHashArea::b:p::p}, space :p:17:p}}"
+					} ) {
+						name: "mission1Panel"
+						add( new FormComponent( "javax.swing.JButton" ) {
+							name: "enterHashButton"
+							"text": "enter hash"
+							addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "enterHashButtonActionPerformed", true ) )
+						} )
+						add( new FormComponent( "javax.swing.JTextField" ) {
+							name: "providedHashArea"
+						} )
+					}, new FormLayoutConstraints( class java.lang.String ) {
+						"value": "card1"
+					} )
+					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+						"$horizontalGroup": "par l {seq t {space :::p, comp wordTextArea::::276:x, space :::p, comp addWordButton:::p::p, space :p:18:p}}"
+						"$verticalGroup": "par l {seq l {space :p:19:p, par b {comp addWordButton::b:p::p, comp wordTextArea::b:p::p}, space ::19:x}}"
+					} ) {
+						name: "mission2panel"
+						add( new FormComponent( "javax.swing.JButton" ) {
+							name: "addWordButton"
+							"text": "add word to dictionnary"
+							addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "addWordButtonActionPerformed", true ) )
+						} )
+						add( new FormComponent( "javax.swing.JTextField" ) {
+							name: "wordTextArea"
+						} )
+					}, new FormLayoutConstraints( class java.lang.String ) {
+						"value": "card2"
+					} )
+				} )
 			}, new FormLayoutConstraints( class java.lang.String ) {
 				"value": "Center"
 			} )
 		}, new FormLayoutConstraints( null ) {
-			"location": new java.awt.Point( 0, 595 )
+			"location": new java.awt.Point( 15, 595 )
 			"size": new java.awt.Dimension( 820, 505 )
 		} )
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class java.awt.BorderLayout ) ) {
@@ -95,8 +122,8 @@ new FormModel {
 			"resizable": false
 			"$sizePolicy": 1
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-				"$horizontalGroup": "par l {seq l {space :p:98:p, par t {comp missionDescriptionText:::p:333:p, seq {comp missionLabel:::p::p, space :p:150:p}}, space ::72:x}, seq t {space ::90:x, comp missionPart1:::p:350:p, space :p:63:p}}"
-				"$verticalGroup": "par l {seq l {space :p:22:p, comp missionLabel:::p:32:p, space :::p, comp missionDescriptionText:::p::p, space :::p, comp missionPart1:::p::p, space ::243:x}}"
+				"$horizontalGroup": "par l {seq {space :p:98:p, par t {comp missionDescriptionText:::p:333:p, seq {comp missionLabel:::p::p, space :p:150:p}}, space ::72:x}, seq t {space ::90:x, par l {seq t {comp missionPart1:::p:350:p, space :p:63:p}, seq t {comp nextButton:::p::p, space :p:203:p}}}}"
+				"$verticalGroup": "par l {seq l {space :p:22:p, comp missionLabel:::p:32:p, space :::p, comp missionDescriptionText:::p::p, space :::p, comp missionPart1:::p::p, space ::166:x, comp nextButton:::p::p, space :p:45:p}}"
 			} ) {
 				name: "missionDialogPanel"
 				add( new FormComponent( "javax.swing.JLabel" ) {
@@ -120,6 +147,11 @@ new FormModel {
 					"cursor": #Cursor0
 					"focusable": false
 					"caretColor": #Color1
+				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "nextButton"
+					"text": "next"
+					"visible": false
 				} )
 			}, new FormLayoutConstraints( class java.lang.String ) {
 				"value": "Center"

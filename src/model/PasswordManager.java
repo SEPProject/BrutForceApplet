@@ -12,7 +12,11 @@ public class PasswordManager implements PasswordManagerBehaviour {
     /**
      * the hash of the password
      */
-    private String hashStored;
+    private String hashStored = "";
+
+    public PasswordManager(){
+        setHashStored("viking");
+    }
 
     @Override
     public String getHashStored(){
@@ -22,6 +26,15 @@ public class PasswordManager implements PasswordManagerBehaviour {
     @Override
     public void setHashStored(String password){
         hashStored = hash(password);
+    }
+
+    @Override
+    public boolean testHashUser(String hashUser){
+        if(hashUser.equals(hashStored)){
+            return true;
+        }else{
+            return false;
+        }
     }
 
 
